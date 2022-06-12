@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
 
+function upload(e) {
+  console.warn(e.target.files);
+  const files = e.target.files;
+  const formData = new FormData();
+  formData.append('user_file', files[0]);
+  fetch('http://localhost:5000/upload', {
+    method: "POST",
+    body: formData
+  }).then((resp)=>{
+    resp.json().then((result)=>{
+      console.warn("result ",result);
+    })
+  });
+}
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <center><h1>Upload File in React JS</h1></center>
+      <input type="file" name='user_file' onChange={(e) => upload(e)} />
     </div>
   );
 }
